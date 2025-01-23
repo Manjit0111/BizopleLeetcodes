@@ -1,20 +1,20 @@
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
         nums.sort()
-        answer=set()
-        for index in range(len(nums)-2):
-            if index>0 and nums[index]==nums[index-1]:
-                continue
-            leftPointer=index+1
-            rightPointer=len(nums)-1
-            while leftPointer<rightPointer:
-                total=nums[index]+nums[leftPointer]+nums[rightPointer]
-                if total==0:
-                    answer.add((nums[index],nums[leftPointer],nums[rightPointer]))
-                    leftPointer+=1
-                    rightPointer-=1
-                elif total<0:
-                    leftPointer+=1
+        closest_sum = float('inf')
+        for index in range(len(nums) - 2):  
+            leftPointer, rightPointer = index + 1, len(nums) - 1  
+
+            while leftPointer < rightPointer:
+                current_sum = nums[index] + nums[leftPointer] + nums[rightPointer]
+                if abs(current_sum - target) < abs(closest_sum - target):
+                    closest_sum = current_sum
+                if current_sum < target:
+                    leftPointer += 1
+                elif current_sum > target:
+                    rightPointer -= 1 
                 else:
-                    rightPointer-=1
-        return list(answer)
+                    return current_sum 
+
+        return closest_sum  
+                    
